@@ -8,15 +8,15 @@ However, there are cases in which the entire ledger (for valid reasons several t
 
 Unfortunately, as the template is currently designed, it comes with a public IP. In this blog post, we will discuss how you can use this template on Azure to spin up a HLF network and then move it to a completely private network. 
 
-```
-Before we go any further, this is just one way of accomplishing the task. There may be several other ways of doing it better. If you are implementing your Hyperledger Fabric network from scratch on Azure using a bespoke deployment strategy, this may not apply to you. The purpose of this post is to help you get to that end state by starting with the pre-baked HLF template that is currently available on Azure Marketplace as a first party offering from Microsoft.
-```
+> Before we go any further, this is just one way of accomplishing the task. There may be several other ways of doing it better. If you are implementing your Hyperledger Fabric network from scratch on Azure using a bespoke deployment strategy, this may not apply to you. The purpose of this post is to help you get to that end state by starting with the pre-baked HLF template that is currently available on Azure Marketplace as a first party offering from Microsoft.
 
-Here is the link to HLF on AKS template: https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-azure-blockchain.azure-blockchain-hyperledger-fabric-aks-based?tab=Overview 
-
-The documentation/help is available at: https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service 
+> Here is the link to HLF on AKS template: https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-azure-blockchain.azure-blockchain-hyperledger-fabric-aks-based?tab=Overview 
+>
+> The documentation/help is available at: https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service 
 
 # Working with Private IP/DNS 
+
+------
 
 To start with, set up a single org HLF network on Azure using the template mentioned above. However, choose "Advanced Networking" option while setting it up. You can use the following settings.(You are welcome to use your own settings. This is just an example)
 
@@ -47,4 +47,30 @@ Kubernetes DNS Service IP Address - 10.2.1.10
 
 Docker Bridge Address - 10.2.3.100/24
 ```
+
+Once the clusters are created, you can follow the steps outlined below to convert the public IP/DNS of the clusters to private.
+
+## AKS Settings
+
+> ```
+> Mahesh/Surbhi to fill this section
+> ```
+
+## Set up VNeet Peering
+
+Orderer and Peer clusters will not be able to talk to each other because of the unavailability of public IP. Hence you need to set up VNet peering between the two VNets. Please following the guidance in the link below to set these up. (It needs to be bi-directional)
+
+> https://docs.microsoft.com/en-us/azure/virtual-network/tutorial-connect-virtual-networks-portal
+
+## Set up the HLF network and the Application Instance
+
+An unfortunate fallout of this is that you cannot use Azure Cloud Shell anymore to interact with this ledger. You have to setup the client instance on a VM running inside either of these VNets. (Or create a new VNet for the client VM and peer it with the rest.) You can use the same instructions mentioned in  https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service to set this up. 
+
+> Make sure that your NPM version is 6.14.5
+
+Once the application instance is ready, set up the HLF network (By exchanging the orderer and peer information with each other) The instructions are available in the link given above.
+
+## Testing
+
+Now that you have done the setup and converted the clusters to use private IP, you have to test if the cluster is still able to function normally. Use the channel creation and anchor peer setting commands in the instructions above to check if everything is working fine. 
 
