@@ -1,8 +1,8 @@
 # Introduction
 
-Hyperledger Fabric (HLF) has a couple of interesting deployment templates on Azure. While there is an all encompassing managed offering from Microsoft based on the Linux Foundation version of HLF, there is also an ARM template that sets up the ledger on the managed Kubernetes orchestrator on Azure - Azure Kubernetes Service. (AKS henceforth)
+Hyperledger Fabric (HLF) has a couple of interesting deployment methodologies on Azure. While there is an all encompassing managed offering from Microsoft based on the Linux Foundation version of HLF, there is also an ARM template that sets up the ledger on the managed Kubernetes orchestrator on Azure - Azure Kubernetes Service. (AKS henceforth)
 
-At present, the AKS template of HLF sets up the ledger with a public IP so that the network can span across an organization's boundary and have nodes from other orgs participating in it. Most blockchain implementations in production follow this path and are invariably multi-org networks. So it makes sense to have the template expose a public IP by default. 
+At present, the AKS template of HLF sets up the ledger with a public IP so that the network can span across an organization's trust boundaries and have nodes from other orgs participating in it. Most blockchain implementations in production follow this path and are invariably multi-org networks. So it makes sense to have the template expose a public IP by default. 
 
 However, there are cases in which the entire ledger (for valid reasons several though it appears off from a blockchain perspective), is in the control of a single organization and there is no requirement for the ledger to have a public facing IP or DNS. From a security point of view, in such cases, it is imperative that there is no such public access.
 
