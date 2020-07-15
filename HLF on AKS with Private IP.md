@@ -18,23 +18,13 @@ Unfortunately, as the template is currently designed, it comes with a public IP.
 
 ------
 
-To start with, set up a single org HLF network on Azure using the template mentioned above. However, choose "Advanced Networking" option while setting it up. You can use the following settings.(You are welcome to use your own settings. This is just an example)
+To start with, set up a single org HLF network on Azure using the template mentioned above. However, choose "Advanced Networking" option while setting it up. You can use the following settings though you are welcome to use your own settings. This is just an example. Before you ask why we are starting with 10.2.0.0 and not 10.1.0.0 - we are reserving that address space for the application layer - the discussion of which is outside the purview of this post.
+
+Also, to answer the question why we are creating two VNets and two separate AKS clusters one for orderer and the other for peer, that is how the HLF on AKS template is currently setup on Azure Marketplace. It makes sense in a distributed HLF network scenario with multiple organisations joining the network. In such a scenario, orderer and peer most likely will not be in the control of a single organisation. Hence the template spins them up as separate deployments. If you want to use a single AKS cluster in a Vnet to host both orderer and peer nodes, you can still do so by working with HLF container images available on Linux Foundation repository and spinning up the AKS cluster from scratch. This document, however, is about using the existing HLF on AKS template and changing the settings post deployment. 
+
+Also a word of caution: This document should be taken as a guidance artifact only. Please do not implement production networks using this guidance without proper testing and validation for your particular use case. 
 
 ## Orderer
-
-```
-VNet: 10.3.0.0/16
-
-HLF Subnet: 10.3.0.0/24
-
-Kubernetes Service Address Range - 10.3.1.0/24
-
-Kubernetes DNS Service IP Address - 10.3.1.10
-
-Docker Bridge Address - 10.3.3.100/24
-```
-
-## Peer
 
 ```
 VNet: 10.2.0.0/16
@@ -48,19 +38,33 @@ Kubernetes DNS Service IP Address - 10.2.1.10
 Docker Bridge Address - 10.2.3.100/24
 ```
 
+## Peer
+
+```
+VNet: 10.3.0.0/16
+
+HLF Subnet: 10.3.0.0/24
+
+Kubernetes Service Address Range - 10.3.1.0/24
+
+Kubernetes DNS Service IP Address - 10.3.1.10
+
+Docker Bridge Address - 10.3.3.100/24
+```
+
 Once the clusters are created, you can follow the steps outlined below to convert the public IP/DNS of the clusters to private.
+
+## Set up VNet Peering
+
+Orderer and Peer clusters will not be able to talk to each other because of the unavailability of public IP. Hence you need to set up VNet peering between the two VNets. Please following the guidance in the link below to set these up. (It needs to be bi-directional)
+
+> https://docs.microsoft.com/en-us/azure/virtual-network/tutorial-connect-virtual-networks-portal
 
 ## AKS Settings
 
 > ```
 > Mahesh/Surbhi to fill this section
 > ```
-
-## Set up VNeet Peering
-
-Orderer and Peer clusters will not be able to talk to each other because of the unavailability of public IP. Hence you need to set up VNet peering between the two VNets. Please following the guidance in the link below to set these up. (It needs to be bi-directional)
-
-> https://docs.microsoft.com/en-us/azure/virtual-network/tutorial-connect-virtual-networks-portal
 
 ## Set up the HLF network and the Application Instance
 
