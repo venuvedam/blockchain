@@ -62,10 +62,21 @@ Orderer and Peer clusters will not be able to talk to each other because of the 
 
 ## AKS Settings
 
-> ```
-> Mahesh/Surbhi to fill this section
-> ```
+The template creates following AKS components when deployed.
 
+* An ingress controller with an Host entry matching to Azure Public DNS Zone
+* A Ngnix service using public IP address
+* Ingress controller maps Host entry to Ngnix service using A and TXT record configured in Azure Public DNS zone.
+* A TLS termination service mapping to same public IP address as Ngnix service.
+* TLS service has Azure Public Zone mapping same as Ngnix service.  
+
+Below are changes needed to make AKS use private IP.
+
+* Add `service.beta.kubernetes.io/azure-load-balancer-internal: true` annotation to Ngnix service to force it to use Azure Internal Load Balancer private IP address instead of public IP.
+* Wait for ExternalDNS controller to pick up this change and adjust Azure Public Zone settings.
+* If ExternalDNS controller doesn't force the change, manually update Azure Public Zone DNS settings to use private IP instead of public IP.
+* Apply same changes for TLS service.
+ 
 ## Set up the HLF network and the Application Instance
 
 An unfortunate fallout of this is that you cannot use Azure Cloud Shell anymore to interact with this ledger. You have to setup the client instance on a VM running inside either of these VNets. (Or create a new VNet for the client VM and peer it with the rest.) You can use the same instructions mentioned in  https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service to set this up. 
