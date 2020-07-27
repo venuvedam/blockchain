@@ -89,3 +89,9 @@ Once the application instance is ready, set up the HLF network (By exchanging th
 
 Now that you have done the setup and converted the clusters to use private IP, you have to test if the cluster is still able to function normally. Use the channel creation and anchor peer setting commands in the instructions above to check if everything is working fine. 
 
+## Additional information
+
+* [Hyperledger Fabric consortium on Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service)
+* [Create an ingress controller in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
+* [Secure access to the API server using authorized IP address ranges in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/api-server-authorized-ip-ranges)
+* [AKS HTTP application routing add-on](https://docs.microsoft.com/en-us/azure/aks/http-application-routing)
