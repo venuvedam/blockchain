@@ -95,3 +95,5 @@ Now that you have done the setup and converted the clusters to use private IP, y
 * [Create an ingress controller in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
 * [Secure access to the API server using authorized IP address ranges in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/api-server-authorized-ip-ranges)
 * [AKS HTTP application routing add-on](https://docs.microsoft.com/en-us/azure/aks/http-application-routing)
+* [Additional customizations via Kubernetes Annotations](https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#additional-customizations-via-kubernetes-annotations)
+* [Setting up ExternalDNS for Services on Azure](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md)
