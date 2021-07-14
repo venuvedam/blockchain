@@ -1,5 +1,25 @@
 # Supply Chain Transformation using Distributed Ledger Technology
 
+## Introduction ##
+
+If you are not living under a rock, you have already heard a lot about “Blockchain”, the disruptive distributed ledger technology behind Bitcoin, Ethereum, Dogecoin etc. You may have also read about something called “NFTs” or Non-Fungible Tokens. NBA recently introduced [Top Shot](https://nbatopshot.com/), an interesting way for its fans to collect and own bragging rights to *the most memorable Moments from NBA history[**[i\]**](#_edn1).* All this is made possible by blockchain.
+
+However, all these applications are geared towards the consumer. If you think of Blockchain and immediately get a picture of Elon Musk tweeting about Dogecoin or Beeple [selling an NFT of his art for 60 Million USD](https://www.cnbc.com/2021/03/11/most-expensive-nft-ever-sold-auctions-for-over-60-million.html), don’t worry. Not many people understand the enterprise aspect of the blockchain story. A properly implemented blockchain system or network can transform how your enterprise operates – especially when the enterprise needs to interact with other companies as part of its core business function. 
+
+Here's a thought experiment for you. What is the most common “Multi org business process” that you know? There are no right answers here but most of us zero in on “Supply Chain”. Name any industry and it most likely has a supply chain component. Retail, Consumer Goods, Pharma, Health, Manufacturing, Agriculture… the list goes on.
+
+And inherent to any such multi-org process is the issue of trust. The organizations do not necessarily trust one another. So, they need to bring an arbitrator or trust enforcing entity into the picture. Think of a clearing house or an escrow account to handle payments in the supply chain context. This also requires multiple checks and balances in every step of the way. 
+
+All this considerably slows down the velocity of your supply chain. On the top of it, you have to deal with various government regulations and customs processes. 
+
+### What is Blockchain anyway? ###
+
+So, what exactly is blockchain? Think of it as a data store that you can only add data to. Once a transaction or a record is added to this data store, it is *immutable.* You cannot delete it or modify it in any manner. 
+
+------
+
+## Old Version ##
+
 One of the challenges faced by an enterprise that wishes to transform its supply chain using a distributed ledger technology (DLT) is to secure the buy-in for this paradigm from all its suppliers. Without the suppliers’ (Tier 1, Tier 2 at least) consent there is no value in investing in the transformation.
 
 The first step, hence, for any enterprise is to prepare a comprehensive project report on the idea and discuss it with its main suppliers. Before embarking on this exercise, the enterprise must have completed a set of proof-of-concept (PoC) projects to ascertain the viability of the technology and the new paradigm specifically related to the use case that needs to be transformed. 
