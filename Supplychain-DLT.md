@@ -14,11 +14,17 @@ All this considerably slows down the velocity of your supply chain. On the top o
 
 ### What is Blockchain anyway? ###
 
-So, what exactly is blockchain? Think of it as a data store that you can only add data to. Once a transaction or a record is added to this data store, it is *immutable.* You cannot delete it or modify it in any manner. 
+So, what exactly is blockchain? Think of it as a data store that you can only add data to. Once a transaction or a record is added to this data store, it is *immutable.* You cannot delete it or modify it in any manner. Everyone on the blockchain copy has access to this data and hence can trust it completely. But wait! what if an organization fudges its own copy of the data - add some transactions that others are aware of - and then argue that their copy is the authentic copy? 
+
+It is precisely for this reason that blockchain ledgers have a process called "Consensus". When a transaction is submitted to the ledger, it goes through a process of validation by all (or a majority of) the participating organizations before it is persisted on the ledger. This is called Network Consensus. There are a number of ways in which this consensus mechanism can operate - some of the popular ones being Proof of Work (seen mainly in public blockchain networks), Proof of Authority, Stake etc. This topic is deep enough for its own 2000 word article but for the purpose of this article, let us just agree that before a supply chain transaction can be recorded on the ledger, multiple organizations have to approve that transaction.
+
+Consensus process coupled with the fact that once a transaction is on the ledger, it is immutable, the data recorded on the ledger is sacrosanct. If all the suppliers and the vendors participating in a supply chain have access to such a data repository where all items on the chain are tracked in real-time or near real-time, it removes a lot of friction from the process. For instance, contracts can be settled automatically based on the data on the ledger because it is trustworthy. So, an automated routine can start the money transfer process between suppliers and vendors once a shipment reaches the addressed party. 
+
+There are a lot of nuances and complexities that we need to keep in mind while talking about blockchain. However, this article is more on how an organization aspiring to transform its supply chain using blockchain needs to plan the digital transformation journey. For this purpose, this high level introduction of blockchain is sufficient. If you want to dive deeper into the world of distributed ledgers or blockchain, take a look at the following links. 
 
 ------
 
-## Old Version ##
+## Challenges in Supply Chain ##
 
 One of the challenges faced by an enterprise that wishes to transform its supply chain using a distributed ledger technology (DLT) is to secure the buy-in for this paradigm from all its suppliers. Without the suppliers’ (Tier 1, Tier 2 at least) consent there is no value in investing in the transformation.
 
