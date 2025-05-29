@@ -1,30 +1,34 @@
-# Introduction
+# Implementing Hyperledger Fabric on AKS with Private IP Configuration
 
-Hyperledger Fabric (HLF) has a couple of interesting deployment methodologies on Azure. While there is an all encompassing managed offering from Microsoft based on the Linux Foundation version of HLF, there is also an ARM template that sets up the ledger on the managed Kubernetes orchestrator on Azure - Azure Kubernetes Service. (AKS henceforth)
+## Introduction
 
-At present, the AKS template of HLF sets up the ledger with a public IP so that the network can span across an organization's trust boundaries and have nodes from other orgs participating in it. Most blockchain implementations in production follow this path and are invariably multi-org networks. So it makes sense to have the template expose a public IP by default. 
+Hyperledger Fabric (HLF) offers multiple deployment options on Azure, including a comprehensive managed service and an ARM template for deployment on Azure Kubernetes Service (AKS). While most production blockchain implementations utilize multi-organization networks requiring public IP access, specific use cases demand completely private network configurations for enhanced security.
 
-However, there are cases in which the entire ledger (for valid reasons several though it appears off from a blockchain perspective), is in the control of a single organization and there is no requirement for the ledger to have a public facing IP or DNS. From a security point of view, in such cases, it is imperative that there is no such public access.
+The current HLF on AKS template deploys with public IP addresses by default to enable cross-organizational network participation. However, organizations requiring private-only deployments need to implement additional configuration steps to achieve full network isolation.
 
-Unfortunately, as the template is currently designed, it comes with a public IP. In this blog post, we will discuss how you can use this template on Azure to spin up a HLF network and then move it to a completely private network. 
+This guide demonstrates how to deploy the HLF on AKS template and subsequently configure it for private network operation, eliminating all public-facing endpoints while maintaining full functionality.
 
-> Before we go any further, this is just one way of accomplishing the task. There may be several other ways of doing it better. If you are implementing your Hyperledger Fabric network from scratch on Azure using a bespoke deployment strategy, this may not apply to you. The purpose of this post is to help you get to that end state by starting with the pre-baked HLF template that is currently available on Azure Marketplace as a first party offering from Microsoft.
+### Prerequisites and Scope
 
-> Here is the link to HLF on AKS template: https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-azure-blockchain.azure-blockchain-hyperledger-fabric-aks-based?tab=Overview 
->
-> The documentation/help is available at: https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service 
+This guide applies specifically to deployments using the pre-configured HLF template available on Azure Marketplace. Organizations implementing custom Hyperledger Fabric deployments from scratch may require different approaches.
 
-# Working with Private IP/DNS 
+**Template Reference**: [HLF on AKS Template](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-azure-blockchain.azure-blockchain-hyperledger-fabric-aks-based?tab=Overview)
 
-------
+**Documentation**: [Hyperledger Fabric Consortium on AKS](https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service)
 
-To start with, set up a single org HLF network on Azure using the template mentioned above. However, choose "Advanced Networking" option while setting it up. You can use the following settings though you are welcome to use your own settings. This is just an example. Before you ask why we are starting with 10.2.0.0 and not 10.1.0.0 - we are reserving that address space for the application layer - the discussion of which is outside the purview of this post.
+## Private Network Configuration
 
-Also, to answer the question why we are creating two VNets and two separate AKS clusters one for orderer and the other for peer, that is how the HLF on AKS template is currently setup on Azure Marketplace. It makes sense in a distributed HLF network scenario with multiple organisations joining the network. In such a scenario, orderer and peer most likely will not be in the control of a single organisation. Hence the template spins them up as separate deployments. If you want to use a single AKS cluster in a Vnet to host both orderer and peer nodes, you can still do so by working with HLF container images available on Linux Foundation repository and spinning up the AKS cluster from scratch. This document, however, is about using the existing HLF on AKS template and changing the settings post deployment. 
+### Initial Deployment
 
-Also a word of caution: This document should be taken as a guidance artifact only. Please do not implement production networks using this guidance without proper testing and validation for your particular use case. 
+Deploy a single-organization HLF network using the Azure template with "Advanced Networking" configuration. The following network settings provide a foundation for private deployment:
 
-## Orderer
+**Architecture Overview**: The template creates separate VNets and AKS clusters for orderer and peer nodes, reflecting the distributed nature of multi-organization networks. This separation maintains security boundaries even in single-organization deployments.
+
+> **Note**: Address space 10.1.0.0/16 is reserved for application layer components not covered in this guide.
+
+### Network Configuration
+
+#### Orderer Network
 
 ```
 VNet: 10.2.0.0/16
@@ -38,7 +42,7 @@ Kubernetes DNS Service IP Address - 10.2.1.10
 Docker Bridge Address - 10.2.3.100/24
 ```
 
-## Peer
+#### Peer Network
 
 ```
 VNet: 10.3.0.0/16
@@ -52,48 +56,58 @@ Kubernetes DNS Service IP Address - 10.3.1.10
 Docker Bridge Address - 10.3.3.100/24
 ```
 
-Once the clusters are created, you can follow the steps outlined below to convert the public IP/DNS of the clusters to private.
+### VNet Peering Configuration
 
-## Set up VNet Peering
+Establish bidirectional VNet peering between orderer and peer networks to enable communication in the absence of public IP addresses.
 
-Orderer and Peer clusters will not be able to talk to each other because of the unavailability of public IP. Hence you need to set up VNet peering between the two VNets. Please following the guidance in the link below to set these up. (It needs to be bi-directional)
+**Reference**: [Connect Virtual Networks with VNet Peering](https://docs.microsoft.com/en-us/azure/virtual-network/tutorial-connect-virtual-networks-portal)
 
-> https://docs.microsoft.com/en-us/azure/virtual-network/tutorial-connect-virtual-networks-portal
+### AKS Private IP Configuration
 
-## AKS Settings
+#### Current Template Components
 
-The template creates following AKS components when deployed.
+The template deploys the following public-facing components:
 
-* An ingress controller with an Host entry matching to Azure Public DNS Zone
-* A Ngnix service using public IP address
-* Ingress controller maps Host entry to Ngnix service using A and TXT record configured in Azure Public DNS zone.
-* A TLS termination service mapping to same public IP address as Ngnix service.
-* TLS service has Azure Public Zone mapping same as Ngnix service.  
+- Ingress controller with host entries mapped to Azure Public DNS Zone
+- Nginx service utilizing public IP addresses
+- TLS termination service with public IP mapping
+- DNS records (A and TXT) configured in Azure Public DNS Zone
 
-Below are changes needed to make AKS use private IP.
+#### Required Modifications
 
-* Add `service.beta.kubernetes.io/azure-load-balancer-internal: true` annotation to Ngnix service to force it to use Azure Internal Load Balancer private IP address instead of public IP.
-* Wait for ExternalDNS controller to pick up this change and adjust Azure Public Zone settings.
-* If ExternalDNS controller doesn't force the change, manually update Azure Public Zone DNS settings to use private IP instead of public IP.
-* Apply same changes for TLS service.
+Convert these components to use private IP addresses:
+
+1. **Nginx Service**: Add annotation `service.beta.kubernetes.io/azure-load-balancer-internal: true` to force Azure Internal Load Balancer usage
+2. **DNS Updates**: Allow ExternalDNS controller to automatically update Azure Public Zone settings, or manually update DNS records to reference private IP addresses
+3. **TLS Service**: Apply identical modifications to TLS service configuration
  
-## Set up the HLF network and the Application Instance
+### Client Application Setup
 
-An unfortunate fallout of this is that you cannot use Azure Cloud Shell anymore to interact with this ledger. You have to setup the client instance on a VM running inside either of these VNets. (Or create a new VNet for the client VM and peer it with the rest.) You can use the same instructions mentioned in  https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service to set this up. 
+Private network configuration requires establishing client connectivity within the VNet infrastructure. Azure Cloud Shell access is no longer available for private networks.
 
-> Make sure that your NPM version is 6.14.5
+**Setup Requirements**:
+- Deploy client VM within existing VNets or create dedicated VNet with peering
+- Ensure Node.js NPM version 6.14.5 compatibility
+- Follow standard HLF network setup procedures for orderer-peer communication
 
-Once the application instance is ready, set up the HLF network (By exchanging the orderer and peer information with each other) The instructions are available in the link given above.
+**Reference**: [HLF Consortium Setup Guide](https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service)
 
-## Testing
+### Network Validation
 
-Now that you have done the setup and converted the clusters to use private IP, you have to test if the cluster is still able to function normally. Use the channel creation and anchor peer setting commands in the instructions above to check if everything is working fine. 
+Verify private network functionality using standard HLF operations:
+- Channel creation commands
+- Anchor peer configuration
+- Transaction processing validation
 
-## Additional information
+### Important Considerations
 
-* [Hyperledger Fabric consortium on Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service)
-* [Create an ingress controller in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
-* [Secure access to the API server using authorized IP address ranges in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/api-server-authorized-ip-ranges)
-* [AKS HTTP application routing add-on](https://docs.microsoft.com/en-us/azure/aks/http-application-routing)
-* [Additional customizations via Kubernetes Annotations](https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#additional-customizations-via-kubernetes-annotations)
-* [Setting up ExternalDNS for Services on Azure](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md)
+> **Production Deployment Warning**: This guidance provides implementation patterns for private HLF networks. Conduct thorough testing and validation for specific production use cases before deployment.
+
+## Additional Resources
+
+- [Hyperledger Fabric Consortium on Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/blockchain/templates/hyperledger-fabric-consortium-azure-kubernetes-service)
+- [Create an Ingress Controller in Azure Kubernetes Service (AKS)](https://docs.microsoft.com/en-us/azure/aks/ingress-basic)
+- [Secure Access to API Server Using Authorized IP Address Ranges in AKS](https://docs.microsoft.com/en-us/azure/aks/api-server-authorized-ip-ranges)
+- [AKS HTTP Application Routing Add-on](https://docs.microsoft.com/en-us/azure/aks/http-application-routing)
+- [Additional Customizations via Kubernetes Annotations](https://docs.microsoft.com/en-us/azure/aks/load-balancer-standard#additional-customizations-via-kubernetes-annotations)
+- [Setting up ExternalDNS for Services on Azure](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/azure.md)

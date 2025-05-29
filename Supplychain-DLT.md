@@ -1,68 +1,91 @@
-# Supply Chain Transformation using Distributed Ledger Technology
+# Supply Chain Transformation Through Distributed Ledger Technology
 
-One of the challenges faced by an enterprise that wishes to transform its supply chain using a distributed ledger technology (DLT) is to secure the buy-in for this paradigm from all its suppliers. Without the suppliers’ (Tier 1, Tier 2 at least) consent there is no value in investing in the transformation.
+## Executive Summary
 
-The first step, hence, for any enterprise is to prepare a comprehensive project report on the idea and discuss it with its main suppliers. Before embarking on this exercise, the enterprise must have completed a set of proof-of-concept (PoC) projects to ascertain the viability of the technology and the new paradigm specifically related to the use case that needs to be transformed. 
+Enterprises seeking to transform their supply chains using distributed ledger technology (DLT) face the critical challenge of securing supplier participation across the network. Success requires comprehensive stakeholder buy-in, strategic pilot implementation, and sustainable governance models.
 
-The goal should be to recruit at least two suppliers so that a minimum viable network can be established to demonstrate the value proposition of a decentralized and distributed immutable ledger that brings in transparency, speed and accuracy into the business transactions that happen on the supply chain network between these organizations.
+## Implementation Framework
 
-This phase is generally called the “Pilot” phase of the business transformation. During this period and probably for sometime after this as well, the governance aspects of the network (Maintaining the network infrastructure, topology, recruiting new suppliers, handling the consensus process etc) is handled by the anchor enterprise itself in order to remove any barriers to entry for its suppliers. 
+### Phase 1: Foundation and Stakeholder Engagement
 
-Obviously, this role of a business network operator requires considerable expertise in the technology platform of choice. The anchor enterprise may or may not have the manpower and the systems to handle this inhouse. Mostly, the organisation will invite a partner to deal with these aspects on its behalf. 
+Organizations must complete proof-of-concept projects before engaging suppliers, demonstrating technology viability and specific use case benefits. The primary objective is recruiting a minimum of two suppliers to establish a viable network that showcases the value proposition of decentralized, immutable ledger systems.
 
-This may involve setting up the distributed network nodes for each organisation; making sure that the nodes can talk to each other and integrating the nodes with the downstream and upstream line of business applications that these organisations use. 
+Key benefits include enhanced transparency, accelerated transaction processing, and improved accuracy across organizational boundaries.
 
-There is a lot of effort involved in setting this up. The anchor customer cannot expect the suppliers to take care of this expense without knowing whether the network would be beneficial to them. It may be necessary for the anchor customer to fund the pilot in its entirety or at least partly. Otherwise, the suppliers may not be willing to come onboard. This barrier to entry needs to be scrapped for the network to succeed. In some cases, it is seen that the anchor customer and the main partner both invest in the network together to get it going. 
+### Phase 2: Pilot Implementation
 
-In the distributed ledger world, some of the partners have expertise both in implementing the platform as well as acting as the governance operator of the network. However, most small/medium partners focus on either of them. So, the anchor enterprise in question may have to work with one partner for the implementation of the network and another for governing it. Also, the world is moving towards cloud computing. Enterprises are gradually moving their systems from on-premises datacentres to the cloud. In this case, the anchor enterprise will also be teaming up with a platform vendor in addition to the implementation partner and the governance operator. Some of the investment in the network may come from the platform vendor especially if the suppliers are going to be using the same platform for implementing their end of the network. 
+The pilot phase establishes initial network governance under anchor enterprise leadership to minimize supplier barriers to entry. This approach requires substantial expertise in the chosen technology platform, often necessitating strategic partnerships for implementation and ongoing network operations.
 
-Once the suppliers are onboarded, the anchor enterprise needs to demonstrate the value proposition of this network in such a way that it makes sense for all the parties involved. The network should be able to prove the value of participating in it. That means, it is not just the anchor customer who derives business value from this investment, the suppliers and other parties on the network should also benefit from it. Otherwise, the network is not going to be sustainable and successful. 
+#### Network Setup Requirements
 
-Hence, the first step is to use this pilot network to execute a real-life supply chain transaction end to end on the network between the two or three parties involved. Ideally, thanks to the underlying distributed ledger and the network consensus process, handoffs can be done automatically via purpose-built smart contracts that reside on the ledger. Since the data on the ledger is immutable and hence trusted by all the participants, the contracts can be settled automatically as well – cutting down on a number of manual verification steps that are a necessary evil in the conventional supply chain scenario.
+- **Infrastructure**: Distributed node deployment for each participating organization
+- **Integration**: Seamless connectivity with existing line-of-business applications  
+- **Governance**: Comprehensive network management including topology, consensus processes, and supplier recruitment
 
-The preferred outcome of this exercise is an order of magnitude reduction in the time to pay for the anchor customer’s suppliers. The results should speak for themselves. If not, it is time to go back to the drawing board and take a critical look at all the decision made so far in the journey. This includes both the technology decisions such as the choice of the DLT platform and the business workflow selected for this exercise.
+#### Investment Strategy
 
-If the pilot is successful, the scope of the exercise can be broadened to include more participants and create a minimum viable product (MVP). This is like the Minimum Marketable Product (MMP) concept found in a conventional product company roadmap. However, here the focus is more on the entire network rather than an isolated part of the implementation.
+Pilot success demands significant upfront investment, typically funded by the anchor customer to eliminate supplier barriers. Strategic partnerships may share investment costs, particularly with platform vendors whose services extend to multiple network participants.
 
-It is important to document the benefits of the network along with its structure as a shareable case study so that the seller teams are equipped properly when they reach out to potential suppliers of the supply chain network. 
+### Phase 3: Value Demonstration
 
-# Go to Market Strategy for this network
+Network viability depends on demonstrable value for all participants, not solely the anchor enterprise. Implementation should focus on end-to-end supply chain transactions executed via purpose-built smart contracts that automate traditionally manual verification processes.
 
-1. Harness the power of all the sales organizations – Anchor customer, partners, pilot participants. In some cases, the underlying platform or DLT provider also joins the effort.
+**Success Metrics**: Target order-of-magnitude reduction in supplier payment cycles through automated contract settlement enabled by immutable ledger data.
 
-2. Create a focus list of suppliers to talk to. This comes mainly from the anchor customer though the partners can provide their inputs. 
+### Phase 4: Network Expansion
 
-3. Remove all entries to barrier (at least to start with) – Customers need to experience before they can invest in the network. 
+Successful pilots enable expansion to minimum viable product (MVP) status, incorporating additional participants and broader use cases. Documentation of network benefits and structure creates compelling case studies for sales teams engaging potential suppliers.
 
-4. Create a Network-as-a-Service offering with the partner. Any new customer wanting to test the waters, can be onboarded on to this network. They get a DLT Node-as-a-Service. If they are convinced, the partner can implement the node for them in their deployment zone of choice. (The customer is free, however, to choose an implementation partner of his/her choice)
+## Go-to-Market Strategy
 
-5. Create a revenue model for the network governance operator. For the pilot, this is mainly funded by the anchor customer. However, it is important to define how the governance operators are compensated on the network. 
+### Strategic Components
 
-   > - Per transaction per organization – may not work in all cases as it does not deal with the actual business process. 
-   > - Per User, per SKU
-   > - T-shirt sizing of the SKUs tracked
-   > - Annual fixed price contracts with each of the participants. (This can vary from participant to participant depending on their stake on the network and the value they derive from it)
+1. **Sales Organization Alignment**: Leverage sales capabilities across anchor customers, implementation partners, and pilot participants, including DLT platform providers where applicable
 
-6. How to compute the subscription costs or the Node-as-a-Service costs? 
+2. **Target Market Segmentation**: Develop focused supplier prospect lists primarily from anchor customer recommendations, supplemented by partner insights
 
-   It is a function of the following parameters. (Not an exhaustive list)
+3. **Barrier Elimination**: Remove entry barriers through trial opportunities, enabling suppliers to experience network value before committing investment
 
-   >a.    Platform costs (Compute, Storage, Bandwidth etc)
-   >
-   >b.    Implementation costs (Setting up the infra and the application)
-   >
-   >c.    Service and Support costs (Supporting the node, upgrades, patches etc)
-   >
-   >d.    Governance costs (Network governance operations)
+4. **Network-as-a-Service**: Establish NaaS offerings with implementation partners, providing DLT Node-as-a-Service for prospect evaluation, with flexible deployment options post-validation
 
-Once you have these costs estimated, you must decide which pricing model makes sense for you and your network participants. You can keep the initial costs low to convince organizations to join your network and then charge a subscription fee. 
+### Revenue Model Development
 
-No matter which pricing model you choose, you must be prepared for a multi-year journey to recoup your investment on this project.
+#### Governance Operator Compensation
 
-Finally, the distributed ledger protocol space is rapidly evolving. In the next couple of years, the market may see a rationalization or consolidation of the protocols in play. It is important to future proof any investment made in this area. Architecturally speaking, the solution should not be tightly coupled with the underlying ledger protocol. Ideally, an API layer should abstract the ledger so that the rest of your solution need not undergo an expensive re-engineering routine if circumstances dictate in future that the protocol technology should be swapped with another. 
+**Pilot Phase**: Primary funding from anchor customer
+**Production Phase**: Sustainable compensation models including:
 
-Before I conclude this article, three architectural drivers to keep in mind when designing a supply chain network: (Or any network for that matter)
+- **Per-transaction**: Organization-based pricing (limited applicability)
+- **Per-user/SKU**: Usage-based pricing aligned with business processes  
+- **Tiered SKU**: T-shirt sizing model for tracked inventory
+- **Annual Contracts**: Fixed-price agreements varying by participant stake and derived value
 
->1. Keep the network open. Anyone should be able to join from any platform.
->2. Keep it layered and sufficiently abstracted to weather “tech storms”.
->3. Be creative with governance and pricing models.
+#### Cost Structure Analysis
+
+Node-as-a-Service and subscription pricing should incorporate:
+
+- **Platform Costs**: Compute, storage, and bandwidth requirements
+- **Implementation Costs**: Infrastructure setup and application deployment
+- **Service & Support**: Ongoing node maintenance, upgrades, and patches
+- **Governance Costs**: Network administration and operational oversight
+
+### Strategic Considerations
+
+#### Investment Timeline
+
+Pricing models should account for multi-year investment recovery cycles, with options for low initial costs transitioning to subscription-based models as organizations recognize network value.
+
+#### Technology Evolution
+
+The rapidly evolving DLT landscape requires future-proofing strategies:
+
+- **Platform Independence**: API abstraction layers to enable protocol transitions without extensive re-engineering
+- **Market Consolidation**: Preparation for potential protocol rationalization and technology convergence
+
+### Architectural Principles
+
+Critical design drivers for sustainable supply chain networks:
+
+1. **Open Network Architecture**: Platform-agnostic participation enabling universal access
+2. **Layered Abstraction**: Sufficient separation to withstand technology disruption
+3. **Innovative Governance**: Creative approaches to network administration and pricing models
